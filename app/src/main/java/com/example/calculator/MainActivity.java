@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
     EditText inputEditText1, inputEditText2;
     Button addButton, subButton, multButton, divButton;
@@ -102,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
     }
     protected void displayResult(Double result)
     {
-        result = Math.round(result * 10000000) / 10000000.0;
-        resultTextView.setText(String.valueOf(result));
+        DecimalFormat df = new DecimalFormat("#.##########");
+        String results = df.format(result);
+        resultTextView.setText(results);
     }
 
 }
