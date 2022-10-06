@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     EditText inputEditText1, inputEditText2;
     Button addButton, subButton, multButton, divButton;
-    TextView resultTextView;;
+    TextView resultTextView;
     Double number1, number2;
 
     @Override
@@ -33,14 +35,16 @@ public class MainActivity extends AppCompatActivity {
         resultTextView = findViewById(R.id.btn_res);
         ClickListner();
     }
+
+
     public void ClickListner(){
             addButton.setOnClickListener(new View.OnClickListener() { // Addition task
                 @Override
                 public void onClick(View v) {
-                    if (validateFields())
+                    if (notValidateFields())
                     {
-                        Toast.makeText(getApplicationContext(),"Please Enter All Values", Toast.LENGTH_LONG).show();
-                    }else{
+                        Toast.makeText(getApplicationContext(),"Please Input Correctly!", Toast.LENGTH_LONG).show();
+                    } else{
                         parseFields();
                         Double result = number1 + number2 ;
                         displayResult(result);
@@ -48,13 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+
             subButton.setOnClickListener(new View.OnClickListener() { // Subtraction task
                 @Override
                 public void onClick(View v) {
-                    if(validateFields())
+                    if(notValidateFields())
                     {
-                        Toast.makeText(getApplicationContext(),"Please Enter All Values", Toast.LENGTH_LONG).show();
-                    }else {
+                        Toast.makeText(getApplicationContext(),"Please Input Correctly!", Toast.LENGTH_LONG).show();
+                    } else{
                         parseFields();
                         Double result = number1 - number2;
                         displayResult(result);
@@ -62,26 +67,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+
         multButton.setOnClickListener(new View.OnClickListener() { // Multiplication task
             @Override
             public void onClick(View v) {
-                if(validateFields())
+                if(notValidateFields())
                 {
-                    Toast.makeText(getApplicationContext(),"Please Enter All Values", Toast.LENGTH_LONG).show();
-                }else {
+                    Toast.makeText(getApplicationContext(),"Please Input Correctly!", Toast.LENGTH_LONG).show();
+                } else{
                     parseFields();
                     Double result = number1 * number2;
                     displayResult(result);
                 }
             }
         });
+
+
         divButton.setOnClickListener(new View.OnClickListener() { // Divide task
             @Override
             public void onClick(View v) {
-                if(validateFields())
+                if(notValidateFields())
                 {
-                    Toast.makeText(getApplicationContext(),"Please Enter All Values", Toast.LENGTH_LONG).show();
-                }else {
+                    Toast.makeText(getApplicationContext(),"Please Input Correctly!", Toast.LENGTH_LONG).show();
+                } else{
                     parseFields();
                     if (number2 == 0) {
                         resultTextView.setText("Math Error!");
@@ -93,15 +101,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    protected boolean validateFields()
+
+
+    protected boolean notValidateFields()
     {
-        return (inputEditText1.getText().toString()).equals("") || (inputEditText2.getText().toString()).equals("");
+        if( !isNumeric(inputEditText1.getText().toString()) || !isNumeric(inputEditText2.getText().toString()) ) return true;
+        return  (inputEditText1.getText().toString()).equals("") || (inputEditText2.getText().toString()).equals("");
     }
+
+
     protected void parseFields()
     {
         number1 = Double.parseDouble(inputEditText1.getText().toString());
         number2 = Double.parseDouble(inputEditText2.getText().toString());
     }
+
+
     protected void displayResult(Double result)
     {
         DecimalFormat df = new DecimalFormat("#.##########");
@@ -109,4 +124,23 @@ public class MainActivity extends AppCompatActivity {
         resultTextView.setText(results);
     }
 
+
+//    private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+//    public boolean isNumeric(String strNum) {
+//        if ( strNum == null ) {
+//            return false;
+//        }
+//        return pattern.matcher(strNum).matches();
+//    }
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 }
