@@ -103,35 +103,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    protected boolean notValidateFields()
+    protected boolean notValidateFields() // Check if user inputs the values Correctly or NOT
     {
         if( !isNumeric(inputEditText1.getText().toString()) || !isNumeric(inputEditText2.getText().toString()) ) return true;
         return  (inputEditText1.getText().toString()).equals("") || (inputEditText2.getText().toString()).equals("");
     }
 
 
-    protected void parseFields()
+    protected void parseFields() // This Function takes Inputs from Input Fields into double_type variable
     {
         number1 = Double.parseDouble(inputEditText1.getText().toString());
         number2 = Double.parseDouble(inputEditText2.getText().toString());
     }
 
 
-    protected void displayResult(Double result)
+    protected void displayResult(Double result)  // It Displays the calculated result from arithmetic function
     {
         DecimalFormat df = new DecimalFormat("#.##########");
         String results = df.format(result);
         resultTextView.setText(results);
     }
 
-
-//    private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
-//    public boolean isNumeric(String strNum) {
-//        if ( strNum == null ) {
-//            return false;
-//        }
-//        return pattern.matcher(strNum).matches();
-//    }
+    // Check if the Inputs are Decimal value or anything else
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -143,4 +136,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }
